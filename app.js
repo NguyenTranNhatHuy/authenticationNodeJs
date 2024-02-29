@@ -8,8 +8,7 @@ var FileStore = require("session-file-store")(session);
 
 var passport = require("passport");
 var authenticate = require("./middleware/authenticate");
-
-// var indexRouter = require("./routes/index");
+const uploadRouter = require('./routes/uploadRouter');
 var dishRouter = require("./routes/dishRouter");
 var promotionRouter = require("./routes/promotionRoute");
 var leaderRouter = require("./routes/leaderRoute");
@@ -46,6 +45,8 @@ app.use(
   })
 );
 
+
+app.use('/imageUpload', uploadRouter);
 app.use(passport.initialize());
 app.use(passport.session());
 
