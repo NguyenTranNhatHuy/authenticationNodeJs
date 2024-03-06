@@ -94,6 +94,20 @@ var authenticate = require('../middleware/authenticate');
 //     }
 //   );
 // });
+userRouter
+  .route("/")
+  .get(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+    Users.find({})
+      .then(
+        (users) => {
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "application/json");
+          res.json(users);
+        },
+        (err) => next(err)
+      )
+      .catch((err) => next(err));
+  });
 
 userRouter.post('/signup', (req, res, next) => {
   Users.register(new Users({ username: req.body.username }),

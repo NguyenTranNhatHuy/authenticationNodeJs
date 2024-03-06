@@ -22,7 +22,7 @@ dishRouter
       )
       .catch((err) => next(err));
   })
-  .post(cors(), authenticate.verifyUser, (req, res, next) => {
+  .post(cors(), authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Dishes.create(req.body)
       // .populate('comments.author')
       .then(
@@ -37,11 +37,11 @@ dishRouter
       .catch((err) => next(err));
   })
 
-  .put(cors(), authenticate.verifyUser, (req, res, next) => {
+  .put(cors(), authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     res.statusCode = 403;
     res.end("PUT operation not supported on /dishes");
   })
-  .delete(cors(), authenticate.verifyUser, (req, res, next) => {
+  .delete(cors(), authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Dishes.deleteMany({})
       .then(
         (resp) => {
@@ -152,7 +152,7 @@ dishRouter
       .catch((err) => next(err));
   })
 
-  .delete(cors(), authenticate.verifyUser, (req, res, next) => {
+  .delete(cors(), authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
     Dishes.findById(req.params.dishId)
       .then((dish) => {
         if (dish != null) {
