@@ -70,12 +70,7 @@ app.use("/users", userRouter);
 app.use("/quizzes", quizRouter);
 app.use("/question", questionRouter);
 
-// app.use("/dishes", dishRouter);
-// app.use("/toppings", toppingRouter);
-// app.use("/promotions", promotionRouter);
-// app.use("/leaders", leaderRouter);
-// app.use("/youtubes", youtubeRouter);
-// app.use("/cakes", cakeRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

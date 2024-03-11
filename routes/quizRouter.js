@@ -24,18 +24,19 @@ quizRouter
     })
     .post(cors(), authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         Quizzes.create(req.body)
-            // .populate('questions')
-            .then(
-                (quiz) => {
-                    console.log("Quiz created", quiz);
-                    res.statusCode = 200;
-                    res.setHeader("Content-Type", "application/json");
-                    res.json(quiz);
-                },
-                (err) => next(err)
-            )
+            .then((quiz) => {
+                // Sau khi tạo quiz, sử dụng populate để lấy thông tin chi tiết của các câu hỏi
+                return Quizzes.findById(quiz._id).populate('questions').exec();
+            })
+            .then((populatedQuiz) => {
+                console.log("Quiz created", populatedQuiz);
+                res.statusCode = 200;
+                res.setHeader("Content-Type", "application/json");
+                res.json(populatedQuiz);
+            })
             .catch((err) => next(err));
     })
+
 
     .put(cors(), authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         res.statusCode = 403;
