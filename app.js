@@ -8,17 +8,19 @@ var FileStore = require("session-file-store")(session);
 
 var passport = require("passport");
 var authenticate = require("./middleware/authenticate");
-const uploadRouter = require('./routes/uploadRouter');
-var dishRouter = require("./routes/dishRouter");
-var promotionRouter = require("./routes/promotionRoute");
-var leaderRouter = require("./routes/leaderRoute");
-var toppingRouter = require("./routes/toppingRouter");
-var youtubeRouter = require("./routes/youtubeRouter");
-var cakeRouter = require("./routes/cakeRouter");
+// const uploadRouter = require('./routes/uploadRouter');
+// var dishRouter = require("./routes/dishRouter");
+// var promotionRouter = require("./routes/promotionRoute");
+// var leaderRouter = require("./routes/leaderRoute");
+// var toppingRouter = require("./routes/toppingRouter");
+// var youtubeRouter = require("./routes/youtubeRouter");
+// var cakeRouter = require("./routes/cakeRouter");
 var userRouter = require("./routes/userRouter");
 var config = require('./models/config');
 var app = express();
 const mongoose = require("mongoose");
+const quizRouter = require("./routes/quizRouter");
+const questionRouter = require("./routes/questionRouter");
 // const url = "mongodb://127.0.0.1:27017/ConFusion";
 const url = config.mongoUrl;
 const connect = mongoose.connect(url);
@@ -46,7 +48,7 @@ app.use(
 );
 
 
-app.use('/imageUpload', uploadRouter);
+// app.use('/imageUpload', uploadRouter);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -65,12 +67,15 @@ app.use(passport.session());
 app.use("/users", userRouter);
 // app.use(auth);
 
-app.use("/dishes", dishRouter);
-app.use("/toppings", toppingRouter);
-app.use("/promotions", promotionRouter);
-app.use("/leaders", leaderRouter);
-app.use("/youtubes", youtubeRouter);
-app.use("/cakes", cakeRouter);
+app.use("/quizzes", quizRouter);
+app.use("/question", questionRouter);
+
+// app.use("/dishes", dishRouter);
+// app.use("/toppings", toppingRouter);
+// app.use("/promotions", promotionRouter);
+// app.use("/leaders", leaderRouter);
+// app.use("/youtubes", youtubeRouter);
+// app.use("/cakes", cakeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
